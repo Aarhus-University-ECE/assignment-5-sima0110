@@ -2,6 +2,8 @@
 #include<malloc.h>
 #include "circle.h"
 #include"jollyjumper.h"
+#include <stdlib.h>
+#include <assert.h>
 
 void printCircle(circle c) {
 	printf("p.x: %d, p.y: %d, r: %d\n", c.p.x, c.p.y, c.r);
@@ -23,11 +25,18 @@ int main(void) {
 
 	/*answer to exercise 7.b*/
 	int n; /*number of numbers to read*/
-	/*readin n and check that is is OK*/
+	printf("Enter number of elements:\n");
+	scanf("%d", &n); //code for input//
+	assert(n > 1); //checks the precondition//
+
 
 	int *numbers = malloc(sizeof(int) * n); /*the numbers read*/
 
 	/*readin the n numbers in the array numbers*/
+	printf("Enter the elements:\n"); 
+	for (int i = 0; i < n; i++){
+		scanf("%d", &numbers[i]); 
+	}
 
 	if (isJollyJumber(numbers, n)) {
 		printf("it is a Jolly Jumper");}
