@@ -1,32 +1,43 @@
 #include <stdio.h>
-#include<malloc.h>
+#include <assert.h>
+#include <stdlib.h>
 #include "circle.h"
 #include"jollyjumper.h"
-#include <stdlib.h>
-#include <assert.h>
 
-int isJollyJumber(const int seq[], int size) { //function that determines whether a sequence is a jolly jumper// 
-bool diffs_found[size - 1];
-int diff; 
-
-for (int i = 0; i < size - 1; i++){
-diffs_found[i] = false;
+void printCircle(circle c) {
+	printf("p.x: %d, p.y: %d, r: %d\n", c.p.x, c.p.y, c.r);
 }
 
-for (int i = 1; i < size; i++){ //loop that calculates the differences between the elements//
-    diff = abs(seq[i - 1] - seq[i]);
-    if (diff >= size || diff == 0){
-        return 0;
-    }
-    if (diffs_found[diff - 1] == false){
-        diffs_found[diff - 1] = true; 
-    }
-}; 
+int main(void) {
+	/*testing circles - make sure that you know how it works and what it is supposed to print out*/
+	circle c[5];
+	fiveCircles(c);
+	for (int i = 0; i < 5; i++) {
+		printCircle(c[i]);
+	}
+	point p;
+	p.x = 2;
+	p.y = 2;
+	translate(&c[1], &p);
+	printCircle(c[1]);
+	printf("isValid: %d", circleIsValid(&c[1]));
 
-for (int i = 0; i < size - 1; i++){
-    if (diffs_found[i] == false){
-    return 0;
-    }
-}
- return 1;
-}
+	/*answer to exercise 7.b*/
+	int n; /*number of numbers to read*/
+
+	printf("Enter the number of elements: \n");
+  	scanf("%d", &n);
+	assert(n > 1); //checking the precondition//
+
+	int *numbers = malloc(sizeof(int) * n); /*the numbers read*/
+
+	printf("Enter the elements:\n");
+  for (int i = 0; i < n; i++) {
+    scanf("%d", &numbers[i]); //code for input//
+  }
+
+	if (isJollyJumber(numbers, n)) {
+		printf("it is a Jolly Jumper");}
+	else {
+		printf("not a Jolly Jumper");}
+	return 0;
