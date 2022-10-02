@@ -3,29 +3,43 @@
 #include <malloc.h>
 #include <stdlib.h>
 
-int isJollyJumber(const int seq[], int size) {
-bool diffs_found[size - 1];
-int diff; 
+/* Function determining whether a sequnce of numbers is a jolly jumper  */
+bool isJollyJumper(const int seq[], int size) {
+    int diffs[size -1]; /* Array of differences between numbers in the sequnce */
+    int i; /* Counter variable */
 
-for (int i = 0; i < size - 1; i++){
-diffs_found[i] = false;
-}
-
-for (int i = 1; i < size; i++){ //calculates the difference between the elements//
-    diff = abs(seq[i - 1] - seq[i]);
-    if (diff >= size || diff == 0){
-        return 0;
+    /* Loop calculating differences between numbers */
+    for(i = 0; i < size; i++) {
+        diffs[i] = seq[i] - seq[i + 1]; /* Subtraction of the numbers in the sequnce */
+        
+        /* Makes a negative difference positive */
+        if(diffs[i] < 0) {
+            diffs[i] = - diffs[i];
+        }
     }
-    if (diffs_found[diff - 1] == false){
-        diffs_found[diff - 1] == true; 
+    
+    bool diffs_found[size - 1]; /* Differences found in the sqeunce */
+   
+    /* Loop initialising all elements in the boolean array as false */
+    for(i = 0; i < size; i++) {
+        diffs_found[i] = false;   
     }
-}; 
+    
+    int temp_diff = 0; /* A temporary difference value */
 
-for (int i = 0; i < size - 1; i++){
-    if (diffs_found[i] == false){
-    return 0;
+    /* Loop checking what differences have been found */
+    for(i = 0; i < size - 1; i++) {
+        temp_diff = diffs[i];
+
+        /* If a diffrence hasn´t been found before, is larger than zero and is smaller than the size of sequence,
+            this statement runs  */
+        if (diffs_found[temp_diff] == false && temp_diff > 0 && temp_diff <= size){
+            diffs_found[temp_diff] = true;
+        }
+        else
+            return false;
     }
-}
- return 1;
-}
 
+    return true;
+    /*post: answer to exercise 7.a*/
+}
